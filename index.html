@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#5b5cf0">
+  <title>ClassMate Hub — Student Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Name Prompt Overlay -->
+  <div class="name-overlay" id="nameOverlay">
+    <div class="name-card">
+      <div class="brand-icon">CM</div>
+      <h2>Welcome to ClassMate Hub</h2>
+      <p>Please enter your name to personalize your workspace dashboard.</p>
+      <form id="nameForm">
+        <input type="text" id="userNameInput" placeholder="Enter your name..." required autofocus />
+        <button type="submit" class="primary full">Get Started 👋</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-icon">CM</div>
+        <div><b>ClassMate</b><span>HUB</span></div>
+      </div>
+      <nav>
+        <button class="nav-item active" data-page="dashboard">🏠 <span>Dashboard</span></button>
+        <button class="nav-item" data-page="tasks">✅ <span>Assignments</span><em id="taskBadge">0</em></button>
+        <button class="nav-item" data-page="notes">📚 <span>Notes</span></button>
+        <button class="nav-item" data-page="timetable">🗓️ <span>Timetable</span></button>
+        <button class="nav-item" data-page="exams">🎯 <span>Exams</span></button>
+        <button class="nav-item" data-page="announcements">📢 <span>Announcements</span></button>
+        <button class="nav-item" data-page="tools">🧮 <span>Student Tools</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <button class="nav-item" id="changeNameBtn">👤 <span id="sidebarUserName">User Profile</span></button>
+        <button class="nav-item" id="themeBtn">🌙 <span>Dark mode</span></button>
+        <div class="mini-card">
+          <span>Study streak</span>
+          <strong id="streak">1 day 🔥</strong>
+          <small>Keep going!</small>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu" id="menuBtn">☰</button>
+        <div class="search">
+          <span>⌕</span>
+          <input id="globalSearch" placeholder="Search notes, tasks, subjects...">
+        </div>
+        <div class="top-actions">
+          <button class="icon-btn" id="quickAdd" title="Quick add">＋</button>
+          <button class="icon-btn" id="notifyBtn" title="Notifications">🔔<i></i></button>
+          <div class="avatar" id="avatarLetter">U</div>
+        </div>
+      </header>
+
+      <section class="content">
+        <!-- Dashboard -->
+        <div id="page-dashboard" class="page active">
+          <div class="welcome">
+            <div>
+              <p class="eyebrow">STUDENT DASHBOARD</p>
+              <h1>Hey, <span id="displayName">Student</span> 👋</h1>
+              <p id="dateText">Here’s what’s happening today.</p>
+            </div>
+            <button class="primary" data-page="tasks">＋ Add assignment</button>
+          </div>
+          <div class="stats">
+            <div class="stat-card"><span class="stat-icon purple">📚</span><div><small>Total notes</small><strong id="statNotes">0</strong></div></div>
+            <div class="stat-card"><span class="stat-icon blue">✅</span><div><small>Pending tasks</small><strong id="statTasks">0</strong></div></div>
+            <div class="stat-card"><span class="stat-icon orange">🎯</span><div><small>Upcoming exams</small><strong id="statExams">0</strong></div></div>
+            <div class="stat-card"><span class="stat-icon green">⏱</span><div><small>Focus minutes</small><strong id="statFocus">0</strong></div></div>
+          </div>
+          <div class="grid-2">
+            <div class="panel">
+              <div class="panel-head">
+                <div><h2>Today’s timetable</h2><p>Your classes for today</p></div>
+                <button class="text-btn" data-page="timetable">Manage Schedule →</button>
+              </div>
+              <div id="todayClasses" class="class-list"></div>
+            </div>
+            <div class="panel">
+              <div class="panel-head">
+                <div><h2>Upcoming tasks</h2><p>Stay on top of your work</p></div>
+                <button class="text-btn" data-page="tasks">View all →</button>
+              </div>
+              <div id="upcomingTasks" class="task-list"></div>
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="panel">
+              <div class="panel-head">
+                <div><h2>Next exam</h2><p id="nextExamSubject">No exams added yet</p></div>
+                <button class="text-btn" data-page="exams">Manage →</button>
+              </div>
+              <div class="exam-hero" id="examHero"></div>
+            </div>
+            <div class="panel">
+              <div class="panel-head">
+                <div><h2>Quick tools</h2><p>Things you use every day</p></div>
+              </div>
+              <div class="quick-tools">
+                <button data-tool="percentage">％<span>Percentage</span></button>
+                <button data-tool="grade">A+<span>Grade calculator</span></button>
+                <button data-tool="focus">⏱<span>Focus timer</span></button>
+                <button data-tool="age">🎂<span>Age calculator</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Assignments -->
+        <div id="page-tasks" class="page">
+          <div class="page-title">
+            <div><p class="eyebrow">ORGANIZE</p><h1>Assignments</h1><p>Track homework, projects and class work.</p></div>
+            <button class="primary" id="addTaskBtn">＋ New assignment</button>
+          </div>
+          <div class="filter-row">
+            <button class="filter active" data-filter="all">All</button>
+            <button class="filter" data-filter="pending">Pending</button>
+            <button class="filter" data-filter="done">Completed</button>
+          </div>
+          <div id="tasksContainer" class="cards-grid"></div>
+        </div>
+
+        <!-- Notes -->
+        <div id="page-notes" class="page">
+          <div class="page-title">
+            <div><p class="eyebrow">KNOWLEDGE</p><h1>Notes Library</h1><p>Keep your class notes organized by subject.</p></div>
+            <button class="primary" id="addNoteBtn">＋ Add note</button>
+          </div>
+          <div class="subject-tabs" id="subjectTabs"></div>
+          <div id="notesContainer" class="cards-grid"></div>
+        </div>
+
+        <!-- Customizable Timetable -->
+        <div id="page-timetable" class="page">
+          <div class="page-title">
+            <div>
+              <p class="eyebrow">SCHEDULE</p>
+              <h1>Customizable Timetable</h1>
+              <p>Add, edit, or remove classes from your weekly schedule.</p>
+            </div>
+            <button class="primary" id="addClassBtn">＋ Add Class Slot</button>
+          </div>
+          <div id="timetableContainer" class="timetable"></div>
+        </div>
+
+        <!-- Exams -->
+        <div id="page-exams" class="page">
+          <div class="page-title">
+            <div><p class="eyebrow">PREPARE</p><h1>Exam Planner</h1><p>Never miss an important test.</p></div>
+            <button class="primary" id="addExamBtn">＋ Add exam</button>
+          </div>
+          <div id="examsContainer" class="cards-grid"></div>
+        </div>
+
+        <!-- Announcements -->
+        <div id="page-announcements" class="page">
+          <div class="page-title">
+            <div><p class="eyebrow">CLASSROOM</p><h1>Announcements</h1><p>Important updates for your class.</p></div>
+            <button class="primary" id="addAnnouncementBtn">＋ New announcement</button>
+          </div>
+          <div id="announcementsContainer" class="announcement-list"></div>
+        </div>
+
+        <!-- Student Tools -->
+        <div id="page-tools" class="page">
+          <div class="page-title">
+            <div><p class="eyebrow">EVERYDAY HELPERS</p><h1>Student Tools</h1><p>Useful calculators and a focus timer.</p></div>
+          </div>
+          <div class="tools-grid">
+            <div class="tool-card">
+              <h3>Percentage</h3>
+              <p>Find a percentage of a number.</p>
+              <div class="tool-inputs"><input id="pctA" type="number" placeholder="%"><input id="pctB" type="number" placeholder="Number"></div>
+              <button class="primary full" id="pctBtn">Calculate</button>
+              <div class="result" id="pctResult">—</div>
+            </div>
+            <div class="tool-card">
+              <h3>Marks → Grade</h3>
+              <p>Enter obtained and total marks.</p>
+              <div class="tool-inputs"><input id="marksA" type="number" placeholder="Obtained"><input id="marksB" type="number" placeholder="Total"></div>
+              <button class="primary full" id="gradeBtn">Calculate</button>
+              <div class="result" id="gradeResult">—</div>
+            </div>
+            <div class="tool-card">
+              <h3>Age Calculator</h3>
+              <p>Calculate age from date of birth.</p>
+              <input id="dob" type="date">
+              <button class="primary full" id="ageBtn">Calculate</button>
+              <div class="result" id="ageResult">—</div>
+            </div>
+            <div class="tool-card focus-card">
+              <h3>Focus Timer</h3>
+              <p>25 minutes of distraction-free study.</p>
+              <div id="timer">25:00</div>
+              <div class="timer-actions">
+                <button class="primary" id="startTimer">Start</button>
+                <button class="secondary" id="resetTimer">Reset</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal">
+      <button class="modal-close" id="modalClose">×</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="script.js"></script>
+</body>
+</html>
